@@ -1,0 +1,70 @@
+\documentclass{beamer}
+
+% ======== BASIC THEME SETUP ========
+\usetheme{Madrid} % Clean and simple base theme
+\usecolortheme{default}
+
+% ======== CUSTOM COLORS ========
+\definecolor{deepNavy}{RGB}{10,15,35} % dark navy background
+\definecolor{accentBlue}{RGB}{80,150,255} % accent color for titles
+\definecolor{softWhite}{RGB}{230,230,230} % light text
+
+% ======== COLOR SETTINGS ========
+\setbeamercolor{background canvas}{bg=deepNavy}
+\setbeamercolor{normal text}{fg=softWhite}
+\setbeamercolor{frametitle}{fg=accentBlue,bg=deepNavy}
+\setbeamercolor{title}{fg=accentBlue}
+\setbeamercolor{structure}{fg=accentBlue}
+\setbeamercolor{itemize item}{fg=accentBlue}
+
+% ======== CUSTOM TITLE DIVIDER ========
+\setbeamertemplate{frametitle}{
+	\nointerlineskip
+	\begin{beamercolorbox}[wd=\paperwidth,ht=0.6cm,dp=0.3cm,leftskip=0.8cm,rightskip=0.8cm]{frametitle}
+		\usebeamerfont{frametitle}\color{white}\insertframetitle
+	\end{beamercolorbox}
+	\vspace{0.3cm}
+}
+\setbeamercolor{frametitle}{bg=accentBlue, fg=white}
+
+% ======== OPTIONAL CLEANUP ========
+\setbeamertemplate{navigation symbols}{} % remove bottom nav icons
+\setbeamertemplate{footline}{}            % remove footer line
+
+% ======== TITLE INFO ========
+\title{A Minimal Example}
+\author{Matthias Vogelgesang}
+\institute{Centre for Modern Beamer Themes}
+% ======== CLEAN FOOTER WITH SLIDE COUNTER ========
+\setbeamertemplate{footline}{
+	\leavevmode%
+	\hbox{%
+		\begin{beamercolorbox}[wd=\paperwidth,ht=2ex,dp=1ex,leftskip=1em,rightskip=1em]{footlinecolor}
+			\hfill
+			\usebeamerfont{footline}\textcolor{accentBlue}{\insertframenumber{} / \inserttotalframenumber}
+		\end{beamercolorbox}%
+	}%
+}
+
+
+
+
+% ======== BEGIN DOCUMENT ========
+\begin{document}
+	
+	\begin{frame}{Who knows what happened this day?}
+		\centering % centers all content in the frame
+		\Large{September 23-24, 1846}\\
+		\vspace{0.5cm} % adds some space below the image
+		\includegraphics[width=0.6\textwidth]{images/neptune.png}
+		
+		
+	\end{frame}
+	
+	\begin{frame}{Equation Example}
+		\[
+		F = G \frac{m_1 m_2}{r^2}
+		\]
+	\end{frame}
+	
+\end{document}
