@@ -3,6 +3,8 @@
 % ======== BASIC THEME SETUP ========
 \usetheme{Madrid} % Clean and simple base theme
 \usecolortheme{default}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes, arrows.meta}
 
 % ======== CUSTOM COLORS ========
 \definecolor{deepNavy}{RGB}{10,15,35} % dark navy background
@@ -56,15 +58,265 @@
 		\centering % centers all content in the frame
 		\Large{September 23-24, 1846}\\
 		\vspace{0.5cm} % adds some space below the image
+		\pause
 		\includegraphics[width=0.6\textwidth]{images/neptune.png}
 		
 		
 	\end{frame}
 	
-	\begin{frame}{Equation Example}
-		\[
-		F = G \frac{m_1 m_2}{r^2}
-		\]
+	\begin{frame}{Motivation: Uranus had residuals I}
+		
+		\begin{columns}[c]
+			% create the column with the first image, that occupies
+			% half of the slide
+			\begin{column}{.5\textwidth}
+				\begin{figure}
+					\centering
+					\includegraphics[width=0.9\textwidth]{images/bouvard4.png}
+					\caption{\small{Table showing the errors in longitude for the predicted orbit of Uranus}}
+				\end{figure}      
+			\end{column}
+			% create the column with the second image, that also
+			% occupies half of the slide
+			\begin{column}{.5\textwidth}
+				\begin{figure}
+					\centering
+					\includegraphics[width=0.7\textwidth]{images/bouvard5.png}
+				\end{figure}
+			\end{column}
+		\end{columns}
+		\vspace{5mm}
+		\small{Observed positions of Uranus deviated from predictions using only known planets (Bouvard's tables). Le Verrier and Adams used these residuals to infer an unseen planet (Neptune, 1846). Bouvard got the bright idea (probably from Laplace) that perhaps the two large planets, Jupiter and Saturn, were ``perturbing'' the orbit of Uranus}
 	\end{frame}
+	
+	\begin{frame}{Motivation: Uranus had residuals II}
+		%\begin{columns}[T] % [T] for top alignment of content within columns
+		%	\begin{column}{0.6\textwidth} % Adjust width as needed for the image
+		%		\centering
+		%		\includegraphics[width=\linewidth]{images/bouvard6.png} % Replace with your image file
+		%	\end{column}
+		%	\begin{column}{0.38\textwidth} % Adjust width as needed for the text
+		%		Neptune was tugging on Uranus from 1781 to 1822 and speeding it up, and then from 1822 to 1846 and beyond, was pulling to slow it down.
+		%	\end{column}
+		%\end{columns}
+		\centering
+		\includegraphics[width=0.6\linewidth]{images/bouvard6.png}
+		
+		Neptune was tugging on Uranus from 1781 to 1822 and speeding it up, and then from 1822 to 1846 and beyond, was pulling to slow it down.
+	\end{frame}
+	
+	\begin{frame}{Perturbation theory I}
+		Perturbation theory is a mathematical approach that approximates solutions to problems that cannot be solved analytically, starting from the exact solution of a simpler related case.
+		\vspace{3mm}
+		
+		\textbf{Base problem (unperturbed orbit): two bodies (Sun + Planet U)}
+		\small
+		\begin{align*}
+			\text{(1) Gravitational Force:} \quad & \mathbf{F} = -\,G\,\frac{M_\odot m_2}{r^2}\,\hat{\mathbf{r}} \\[4pt]
+			\text{(2) Newton’s Second Law:} \quad & \mathbf{F} = m_2\,\ddot{\mathbf{r}} \\[4pt]
+			\text{Combine:} \quad & m_2 \ddot{\mathbf{r}} = -G\,\frac{M_\odot m_2}{r^2}\,\frac{\mathbf{r}}{r} \\[4pt]
+			\Rightarrow \quad & \boxed{\ddot{\mathbf{r}} = -\frac{GM_\odot}{r^3}\,\mathbf{r}}
+		\end{align*}	
+		Solution: Keplerian ellipse with parameters $(a, e, i, \omega, \Omega, M)$.
+	\end{frame}
+	
+	
+	\begin{frame}{Example: Perturbation Theory in Orbital Mechanics}
+		
+		\textbf{Perturbed problem (adding a third body): planet $P$ (mass $m'$ at $r'$)}
+		\[
+		\ddot{\mathbf r} = -\frac{G M}{r^3}\mathbf r + \epsilon\,\mathbf a_{\rm pert},\qquad
+		\mathbf a_{\rm pert} = -G m'\left(\frac{\mathbf r-\mathbf r'}{|\mathbf r-\mathbf r'|^3} + \frac{\mathbf r'}{r'^3}\right)
+		\]
+		where $\epsilon \ll 1$ and $a_{\rm pert}$ represents the gravitational influence of another planet.
+		
+		\medskip
+		Expanding orbital elements as:
+		\[
+		a(t) = a_0 + \epsilon a_1(t), \quad e(t) = e_0 + \epsilon e_1(t), \quad \ldots
+		\]
+		
+		Substitute and keep first-order terms in $\epsilon$:
+		\[
+		\frac{d\omega}{dt} = \frac{3}{4}n\frac{m'}{M_\odot}\left(\frac{a}{a'}\right)^3\!\!\frac{1}{(1 - e'^2)^{3/2}}
+		\]
+		\textit{→ This gives the secular precession of the perihelion.}
+		
+		\medskip
+		\textbf{Connection:}  
+		Le Verrier and Adams used this exact perturbative approach to explain Uranus’s orbital anomalies and predict Neptune’s position.
+	\end{frame}
+	
+	
+	\begin{frame}{Timeline}
+		
+		\centering
+		\scalebox{0.8}{
+		\begin{tikzpicture}[
+			timeline/.style={
+				thick,
+				accentBlue
+			},
+			event/.style={
+				circle,
+				draw=accentBlue,
+				fill=accentBlue!15,
+				minimum size=6mm,
+				inner sep=2pt
+			},
+			textstyle/.style={
+				text width=2.8cm,
+				align=center,
+				font=\small,
+				softWhite
+			}
+			]
+			
+			% Timeline line
+			\draw[timeline] (0,0) -- (12,0);
+			
+			% Events (nodes)
+			\node[event] (kepler) at (0,0) {};
+			\node[event] (newton) at (2.4,0) {};
+			\node[event] (uranus) at (4.8,0) {};
+			\node[event] (bouvard) at (7.2,0) {};
+			\node[event] (leverrier) at (9.6,0) {};
+			\node[event] (neptune) at (12,0) {};
+			
+			% Labels below timeline
+			\node[textstyle, below=0.6cm of kepler] {1609–1619\\Kepler’s Laws};
+			\node[textstyle, below=0.6cm of newton] {1687\\Newton’s\\Gravitation};
+			\node[textstyle, below=0.6cm of uranus] {1781\\Herschel Discovers\\Uranus};
+			\node[textstyle, below=0.6cm of bouvard] {1821\\Bouvard’s\\Anomalies};
+			\node[textstyle, below=0.6cm of leverrier] {1845–1846\\Le Verrier \& Adams\\Predict New Planet};
+			\node[textstyle, below=0.6cm of neptune] {Sept 23, 1846\\Galle Observes\\Neptune};
+			
+			% Labels above timeline
+			\node[textstyle, above=0.6cm of kepler] {Foundation\\of Orbital Theory};
+			\node[textstyle, above=0.6cm of newton] {Mathematical\\Modeling};
+			\node[textstyle, above=0.6cm of uranus] {Astronomical\\Expansion};
+			\node[textstyle, above=0.6cm of bouvard] {Perturbation\\Detected};
+			\node[textstyle, above=0.6cm of leverrier] {Mathematical\\Prediction};
+			\node[textstyle, above=0.6cm of neptune] {Observation\\Confirmed};
+			
+		\end{tikzpicture}
+		}
+		
+		\vspace{0.8cm}
+		\centering
+		\textit{\small Chronological roadmap}
+		
+	\end{frame}
+	
+	\begin{frame}{Example: Perturbation Theory in Orbital Mechanics}
+		
+		\textbf{Idea:}  
+		Perturbation theory approximates complex motions by starting from a solvable base case and adding small corrections.
+		
+		\medskip
+		\textbf{Base problem (unperturbed orbit):}
+		\[
+		\ddot{\mathbf{r}} = -\frac{\mu}{r^3}\mathbf{r}
+		\]
+		Solution: Keplerian ellipse with parameters $(a, e, i, \omega, \Omega, M)$.
+		
+		\medskip
+		\textbf{Perturbed problem (adding a third body):}
+		\[
+		\ddot{\mathbf{r}} = -\frac{\mu}{r^3}\mathbf{r} + \epsilon\,\mathbf{F}_p(\mathbf{r}, t)
+		\]
+		where $\epsilon \ll 1$ and $\mathbf{F}_p$ represents the gravitational influence of another planet.
+		
+		\medskip
+		Expanding orbital elements as:
+		\[
+		a(t) = a_0 + \epsilon a_1(t), \quad e(t) = e_0 + \epsilon e_1(t), \quad \ldots
+		\]
+		
+		Substitute and keep first-order terms in $\epsilon$:
+		\[
+		\frac{d\omega}{dt} = \frac{3}{4}n\frac{m'}{M_\odot}\left(\frac{a}{a'}\right)^3\!\!\frac{1}{(1 - e'^2)^{3/2}}
+		\]
+		\textit{→ This gives the secular precession of the perihelion.}
+		
+		\medskip
+		\textbf{Connection:}  
+		Le Verrier and Adams used this exact perturbative approach to explain Uranus’s orbital anomalies and predict Neptune’s position.
+	\end{frame}
+	
+	
+	\begin{frame}{Perturbation theory}
+		\small{Bouvard was very good at calculating planetary positions, which many astronomers regarded as drudge work (which it was), and it was probably this ability that drew the attention of Laplace, who had Bouvard do much of the calculations for his great work on celestial mechanics, the Traité de Mécanique Céleste, (1798-1825).} 
+	\end{frame}
+	
+	
+	\begin{frame}{Two-body + perturbation (setup)}
+		Two-body (Sun mass $M$) gives Keplerian orbit:
+		\[
+		\ddot{\mathbf r} = -\frac{G M}{r^3}\mathbf r.
+		\]
+		Add perturbing body with mass $m'$ at $\mathbf r'$:
+		\[
+		\ddot{\mathbf r} = -\frac{G M}{r^3}\mathbf r + \mathbf a_{\rm pert},\qquad
+		\mathbf a_{\rm pert} = -G m'\left(\frac{\mathbf r-\mathbf r'}{|\mathbf r-\mathbf r'|^3} + \frac{\mathbf r'}{r'^3}\right)
+		\]
+		(the indirect term places origin at the barycenter with Sun at origin).
+	\end{frame}
+	
+	\begin{frame}{Disturbing function and Lagrange planetary equations}
+		Define disturbing function $\mathcal R(\mathbf r,\mathbf r')$ so that
+		\[
+		\mathbf a_{\rm pert} = \nabla_{\mathbf r}\mathcal R.
+		\]
+		Lagrange planetary equations give rates of orbital elements (mean motion $n= \sqrt{GM/a^3}$):
+		\[
+		\frac{da}{dt}=\frac{2}{n a}\frac{\partial\mathcal R}{\partial \lambda},\quad
+		\frac{de}{dt}=\frac{\sqrt{1-e^2}}{n a^2 e}\frac{\partial\mathcal R}{\partial \omega} - \dots
+		\]
+		(where $\lambda$ is mean longitude, $\omega$ argument of perihelion).  (See standard texts / Laplace–Lagrange.)
+	\end{frame}
+	
+	\begin{frame}{Inverse perturbation — strategy}
+		\begin{enumerate}
+			\item Compute residuals in Uranus' mean longitude $\Delta\lambda_{\rm obs}(t)$ vs model without unknown planet.
+			\item Model secular response of $\lambda(t)$ to a distant perturber via analytical expansion of $\mathcal R$ (Legendre polynomial expansion) and orbit averaging.
+			\item Fit parameters (mass $m'$, semimajor axis $a'$, mean longitude $\lambda'_0$) to minimize residuals (linearize if $m'$ small).
+		\end{enumerate}
+		This is what Le Verrier / Adams effectively did: match observed secular discrepancies to a plausible perturbing orbit.
+	\end{frame}
+	
+	\begin{frame}{Sketch: expansion and secular term}
+		For $r<r'$ expand:
+		\[
+		\frac{1}{|\mathbf r-\mathbf r'|} = \frac{1}{r'}\sum_{\ell=0}^{\infty}\left(\frac{r}{r'}\right)^\ell P_\ell(\cos\psi).
+		\]
+		Averaging over fast angles removes short-period terms; leading secular contribution scales like $(a/a')^\ell$. For an outer perturber the dominant secular contribution to perihelion precession scales like
+		\[
+		\dot{\varpi} \sim n\left(\frac{m'}{M}\right)\left(\frac{a}{a'}\right)^3 \times \mathcal{O}(1),
+		\]
+		so small $m'$ at moderate $a'$ can still produce measurable $\dot\varpi$ or $\Delta\lambda$ over decades.
+	\end{frame}
+	
+	\begin{frame}{Numerical demo (next slide shows result)}
+		We integrate a toy solar system with Sun, Jupiter, Saturn, Uranus; (A) without Neptune, (B) adding Neptune. We plot Uranus' mean longitude difference vs time and show the secular drift produced by Neptune — the effect Le Verrier inferred.
+	\end{frame}
+	
+
+	
+	\begin{frame}{Conclusions}
+		\begin{itemize}
+			\item Neptune’s discovery was a triumph of inverse perturbation \& celestial mechanics.
+			\item Theoretical tools: disturbing function, expansion, Lagrange planetary equations, secular averaging.
+			\item Modern re-analyses and numerical integrators reproduce and refine the historical calculations.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}{References}
+		\footnotesize
+		NASA History; Laplace–Lagrange celestial mechanics texts; modern numerical re-analyses. (See handout / bib.)
+		\vspace{0.5em}
+		\footnotesize Sources: Le Verrier (1846), Adams; review: NASA / historical accounts.
+	\end{frame}
+	
 	
 \end{document}
