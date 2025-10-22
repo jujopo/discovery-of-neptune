@@ -1,0 +1,168 @@
+\documentclass[aspectratio=169]{beamer}
+
+% ==========================
+%   THEME & FONT SETTINGS
+% ==========================
+\usetheme{metropolis}
+\usefonttheme{professionalfonts}
+\usepackage{fontspec}
+% ==========================
+%   FONT SETTINGS (Safe Hybrid)
+% ==========================
+\usepackage{ifxetex,ifluatex}
+\newif\ifxetexorluatex
+\ifxetex
+\xetexorluatextrue
+\else
+\ifluatex
+\xetexorluatextrue
+\else
+\xetexorluatexfalse
+\fi
+\fi
+
+\ifxetexorluatex
+%\usepackage{fontspec}
+\setmainfont{Fira Sans}
+\setsansfont{Fira Sans}
+\setmonofont{Fira Code}
+\else
+\usepackage[scaled=0.9]{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+\fi
+
+
+% ==========================
+%   COLORS AND DESIGN
+% ==========================
+\definecolor{neptuneBlue}{HTML}{3C78D8}
+\definecolor{spaceBlack}{HTML}{0A0A1A}
+\definecolor{lightGray}{HTML}{E0E0E0}
+
+% Custom Metropolis colors
+\setbeamercolor{normal text}{fg=lightGray,bg=spaceBlack}
+\setbeamercolor{alerted text}{fg=neptuneBlue}
+\setbeamercolor{frametitle}{fg=neptuneBlue,bg=spaceBlack}
+\setbeamercolor{progress bar}{fg=neptuneBlue,bg=lightGray}
+\setbeamercolor{title separator}{fg=neptuneBlue}
+\setbeamercolor{section title}{fg=neptuneBlue}
+
+% Remove navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% ==========================
+%   PACKAGES & VISUALS
+% ==========================
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{amsmath, amssymb}
+\usepackage{media9} % for embedding video
+\usepackage{animate} % optional for GIF-style animations
+\usepackage{hyperref}
+
+% ==========================
+%   TITLE INFORMATION
+% ==========================
+\title{\textbf{Perturbations and the Discovery of Neptune}}
+\subtitle{Mathematical Reasoning, Inverse Perturbations, and the Triumph of Prediction}
+\author{Juan Jose Perez Osorio}
+\institute{MSc Applied Mathematics and Statistics\\Stony Brook University}
+\date{Astronomy Picture of the Day Presentation}
+
+% ==========================
+%   BACKGROUND SETTINGS
+% ==========================
+\usebackgroundtemplate{
+	\begin{tikzpicture}
+		\path[shade, left color=spaceBlack, right color=black] (0,0) rectangle (\paperwidth,\paperheight);
+		% Add subtle stars
+		\foreach \i in {1,...,120} {
+			\fill[white, opacity=0.15] (rand*\paperwidth, rand*\paperheight) circle (0.4pt);
+		}
+	\end{tikzpicture}
+}
+
+% ==========================
+%   DOCUMENT BODY
+% ==========================
+\begin{document}
+	
+	% ---- Title Slide ----
+	{
+		\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{neptune_bg.jpg}}
+		\begin{frame}[plain]
+			\titlepage
+		\end{frame}
+	}
+	
+	% ---- Introduction ----
+	\begin{frame}{The Mystery of Uranus}
+		\begin{itemize}
+			\item Newton’s laws accurately predicted most planetary motions.
+			\item However, Uranus’s observed orbit deviated slightly from predictions.
+			\item These deviations hinted at an unseen gravitational influence.
+		\end{itemize}
+		\vspace{1em}
+		\alert{Could mathematics alone reveal the existence of a new planet?}
+	\end{frame}
+	
+	% ---- Perturbation Theory ----
+	\begin{frame}{Perturbation Theory}
+		\begin{columns}
+			\column{0.6\textwidth}
+			\begin{block}{Concept}
+				Perturbation theory allows us to approximate the behavior of a complex system by starting from a simpler, solvable one and adding corrections.
+			\end{block}
+			\begin{itemize}
+				\item Direct perturbations: known causes → effects.
+				\item Inverse perturbations: observed effects → unknown causes.
+			\end{itemize}
+			\column{0.4\textwidth}
+			\includegraphics[width=\linewidth]{orbit_diagram.png}
+		\end{columns}
+	\end{frame}
+	
+	% ---- Mathematical Section ----
+	\begin{frame}{Mathematical Formulation}
+		\begin{align*}
+			F &= ma \\
+			&\Rightarrow m_U \ddot{\vec{r}}_U = -\frac{G m_S m_U}{r_U^3} \vec{r}_U + \sum_i \vec{F}_{\text{pert},i} \\
+			\Delta r_U(t) &\approx f(\text{mass, distance, angle})
+		\end{align*}
+		\vspace{1em}
+		\begin{block}{Goal}
+			Given the residuals in Uranus’s orbit, determine the mass and position of the perturbing body.
+		\end{block}
+	\end{frame}
+	
+	% ---- Simulation Slide ----
+	\begin{frame}{Simulated Orbital Deviations}
+		\centering
+		\includemedia[
+		width=0.8\linewidth,
+		height=0.45\linewidth,
+		activate=onclick,
+		addresource=perturbation.mp4,
+		flashvars={source=perturbation.mp4&autoPlay=true}
+		]{}{VPlayer.swf}
+		\vspace{0.5em}
+		\textit{Python N-body integration showing Uranus’s observed vs. predicted orbit.}
+	\end{frame}
+	
+	% ---- Discovery Slide ----
+	\begin{frame}{Discovery of Neptune}
+		\begin{itemize}
+			\item Using inverse perturbations, Le Verrier and Adams independently predicted Neptune’s location.
+			\item Telescope observations confirmed it almost exactly where predicted.
+		\end{itemize}
+		\vspace{0.5em}
+		\alert{Mathematics led humanity to discover an unseen world.}
+	\end{frame}
+	
+	% ---- Final Slide ----
+	\begin{frame}[standout]
+		\Huge The Universe is Mathematical.\\[1em]
+		\small \url{https://forum.spaceengine.org/viewtopic.php?t=446}
+	\end{frame}
+	
+\end{document}
